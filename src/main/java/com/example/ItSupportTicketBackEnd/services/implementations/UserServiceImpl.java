@@ -16,12 +16,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(() -> {
-            return new DataNotFoundException("user not found");});
+        return userRepository.findByEmail(email).orElseThrow(() -> new DataNotFoundException("user not found"));
     }
 
-    @Override
-    public User persist(User request) {
-        return userRepository.save(request);
-    }
 }

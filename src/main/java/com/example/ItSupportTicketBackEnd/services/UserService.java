@@ -5,6 +5,4 @@ import com.example.ItSupportTicketBackEnd.entities.User;
 
 public interface UserService {
     User getByEmail(String email);
-
-    User persist(User request);
 }
