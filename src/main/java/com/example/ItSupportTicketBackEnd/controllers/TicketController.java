@@ -43,9 +43,8 @@ public class TicketController {
         return ResponseEntity.ok(tickets);
     }
 
-
     @PostMapping("/update/status/{ticketId}")
-    public ResponseEntity<TicketResponseDTO> updateStatus(@PathVariable long ticketId, @RequestBody TrackingStatus status) {
+    public ResponseEntity<TicketResponseDTO> updateStatus(@PathVariable long ticketId, @RequestParam String status) {
         log.info("changing status of a ticket");
         return ResponseEntity.ok(ticketService.updateStatus(ticketId, status));
     }

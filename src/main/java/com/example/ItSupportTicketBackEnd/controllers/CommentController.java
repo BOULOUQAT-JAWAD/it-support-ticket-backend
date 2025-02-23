@@ -19,10 +19,10 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping("{ticketId}")
-    public ResponseEntity<DefaultResponseDTO> persist(@PathVariable long ticketId, @RequestBody CommentRequestDTO request) {
+    @PostMapping
+    public ResponseEntity<DefaultResponseDTO> persist(@RequestBody CommentRequestDTO request) {
         log.info("adding a comment");
-        commentService.persist(ticketId, request);
+        commentService.persist(request);
         return ResponseEntity.ok(
                 DefaultResponseDTO.builder()
                         .message("comment added successfully!")

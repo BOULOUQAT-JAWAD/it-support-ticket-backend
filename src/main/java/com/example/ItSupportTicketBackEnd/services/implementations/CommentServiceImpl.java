@@ -2,6 +2,7 @@ package com.example.ItSupportTicketBackEnd.services.implementations;
 
 import com.example.ItSupportTicketBackEnd.dtos.requests.CommentRequestDTO;
 import com.example.ItSupportTicketBackEnd.entities.Comment;
+import com.example.ItSupportTicketBackEnd.entities.Ticket;
 import com.example.ItSupportTicketBackEnd.mappers.CommentMapper;
 import com.example.ItSupportTicketBackEnd.repositories.CommentRepository;
 import com.example.ItSupportTicketBackEnd.services.AuthService;
@@ -25,15 +26,15 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void persist(long ticketId, CommentRequestDTO request) {
+    public void persist(CommentRequestDTO request) {
+        Ticket ticket = ticketService.geTicket(request.getTicketId());
+
         Comment comment = commentMapper.toEntity(request);
 
         comment.setUser(
                 authService.getAuthenticatedUser()
         );
-        comment.setTicket(
-                ticketService.geTicket(ticketId)
-        );
+        comment.setTicket(ticket);
 
         commentRepository.save(comment);
     }

@@ -40,11 +40,11 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public TicketResponseDTO updateStatus(long id, TrackingStatus trackingStatus) {
+    public TicketResponseDTO updateStatus(long id, String trackingStatus) {
         Optional<Ticket> optionalTicket = ticketRepository.findById(id);
         if(optionalTicket.isPresent()){
             Ticket ticket = optionalTicket.get();
-            ticket.setStatus(trackingStatus);
+            ticket.setStatus(TrackingStatus.valueOf(trackingStatus));
             return ticketMapper.toDTO(ticketRepository.save(ticket));
         }
         throw new DataNotFoundException("Ticket Not Found");

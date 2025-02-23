@@ -44,11 +44,11 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/tickets/add").hasRole(Role.EMPLOYEE.toString())
-                        .requestMatchers("/api/tickets/user").hasRole(Role.EMPLOYEE.toString())
-                        .requestMatchers("/api/tickets/all").hasRole(Role.IT_SUPPORT.toString())
-                        .requestMatchers("/api/tickets/update/status/{ticketId}").hasRole(Role.IT_SUPPORT.toString())
-                        .requestMatchers("/api/comments/**").hasRole(Role.IT_SUPPORT.toString())
+                        .requestMatchers("/api/tickets/add").hasRole("EMPLOYEE")
+                        .requestMatchers("/api/tickets/user").hasRole("EMPLOYEE")
+                        .requestMatchers("/api/tickets/all").hasRole("IT_SUPPORT")
+                        .requestMatchers("/api/tickets/update/status/{ticketId}").hasRole("IT_SUPPORT")
+                        .requestMatchers("/api/comments/**").hasRole("IT_SUPPORT")
                         .anyRequest().authenticated()
                 );
         httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

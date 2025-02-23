@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface TicketService {
     TicketResponseDTO persist(TicketRequestDTO request);
-    TicketResponseDTO updateStatus(long id, TrackingStatus trackingStatus);
+    TicketResponseDTO updateStatus(long id, String trackingStatus);
     List<TicketResponseDTO> getUserTickets(Long ticketId, TrackingStatus status);
     List<TicketResponseDTO> getAllTickets(Long ticketId, TrackingStatus status);
     Ticket geTicket(long id);

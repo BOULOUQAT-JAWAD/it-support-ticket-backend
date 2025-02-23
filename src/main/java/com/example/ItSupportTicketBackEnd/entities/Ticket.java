@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -39,7 +40,10 @@ public class Ticket {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private TrackingStatus status = TrackingStatus.NEW;
+    private TrackingStatus status;
+
+    @OneToMany(mappedBy= "ticket", fetch = FetchType.LAZY)
+    private List<Comment> comments;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by", nullable = false)
@@ -53,6 +57,7 @@ public class Ticket {
 
     @PrePersist
     protected void onCreate() {
+        status = TrackingStatus.NEW;
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
     }
