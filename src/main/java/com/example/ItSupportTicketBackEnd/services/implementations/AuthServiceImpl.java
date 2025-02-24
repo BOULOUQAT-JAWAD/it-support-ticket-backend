@@ -42,6 +42,7 @@ public class AuthServiceImpl implements AuthService {
             return AuthResponseDTO.builder()
                     .email(user.getUsername())
                     .userId(userInfo.getId())
+                    .role(userInfo.getRole())
                     .token(jwtUtils.generateToken(user))
                     .build();
         } catch (AuthenticationException e) {

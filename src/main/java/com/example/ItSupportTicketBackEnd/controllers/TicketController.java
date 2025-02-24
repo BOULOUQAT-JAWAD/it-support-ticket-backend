@@ -43,6 +43,13 @@ public class TicketController {
         return ResponseEntity.ok(tickets);
     }
 
+    @GetMapping("/{ticketId}")
+    public ResponseEntity<TicketResponseDTO> getTicket(@PathVariable long ticketId) {
+        log.info("Getting ticket with ticketId: {} ", ticketId);
+        TicketResponseDTO ticket = ticketService.getOneTicket(ticketId);
+        return ResponseEntity.ok(ticket);
+    }
+
     @PostMapping("/update/status/{ticketId}")
     public ResponseEntity<TicketResponseDTO> updateStatus(@PathVariable long ticketId, @RequestParam String status) {
         log.info("changing status of a ticket");

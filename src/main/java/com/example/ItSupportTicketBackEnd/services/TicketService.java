@@ -14,4 +14,5 @@ public interface TicketService {
     List<TicketResponseDTO> getUserTickets(Long ticketId, TrackingStatus status);
     List<TicketResponseDTO> getAllTickets(Long ticketId, TrackingStatus status);
     Ticket geTicket(long id);
+    TicketResponseDTO getOneTicket(long ticketId);
 }

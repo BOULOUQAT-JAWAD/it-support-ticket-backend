@@ -10,6 +10,7 @@ import com.example.ItSupportTicketBackEnd.dtos.responses.TicketResponseDTO;
 import com.example.ItSupportTicketBackEnd.entities.Ticket;
 import com.example.ItSupportTicketBackEnd.entities.User;
 import com.example.ItSupportTicketBackEnd.mappers.TicketMapper;
+import com.example.ItSupportTicketBackEnd.repositories.AuditLogRepository;
 import com.example.ItSupportTicketBackEnd.repositories.TicketRepository;
 import com.example.ItSupportTicketBackEnd.services.implementations.TicketServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,6 +39,8 @@ public class TicketServiceImplTest {
     @Mock
     private AuthService authService;
 
+    @Mock
+    private AuditLogRepository auditLogRepository;
     @InjectMocks
     private TicketServiceImpl ticketService;
 
@@ -102,6 +105,7 @@ public class TicketServiceImplTest {
         // Arrange
         when(ticketRepository.findById(1L)).thenReturn(Optional.of(ticket));
         when(ticketRepository.save(any(Ticket.class))).thenReturn(ticket);
+        when(auditLogRepository.save(any())).thenReturn(null);
         when(ticketMapper.toDTO(ticket)).thenReturn(ticketResponse);
 
         // Act
@@ -113,6 +117,7 @@ public class TicketServiceImplTest {
         assertEquals(TrackingStatus.IN_PROGRESS, result.getStatus());
         verify(ticketRepository).findById(1L);
         verify(ticketRepository).save(ticket);
+        verify(auditLogRepository).save(any());
         verify(ticketMapper).toDTO(ticket);
     }
 
