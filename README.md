@@ -47,8 +47,6 @@ sqlplus ticketuser/TicketPass123@//localhost:1521/XEPDB1
 
 mvn clean install
 
-docker-compose up --build
-
-mvn package -pl swing-client
+docker-compose up --buildd
 
 java -jar swing-client/target/itsupportticket-client.jar

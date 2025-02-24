@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/api/auth/**","/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/tickets/add").hasRole("EMPLOYEE")
                         .requestMatchers("/api/tickets/user").hasRole("EMPLOYEE")
                         .requestMatchers("/api/tickets/all").hasRole("IT_SUPPORT")

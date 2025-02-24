@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  oracle-db:
+    image: gvenzl/oracle-xe:21-slim
+    environment:
+      - ORACLE_PASSWORD=TicketPass123
+    ports:
+      - "1522:1521"
+    volumes:
+      - oracle-data:/opt/oracle/oradata
+      - ./docker/db/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    healthcheck:
+      test: ["CMD", "sqlplus", "-L", "sys/TicketPass123@//localhost:1521/XEPDB1 as sysdba", "select 1 from dual"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 120s
+
+  backend:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:oracle:thin:@//oracle-db:1521/XEPDB1
+      - SPRING_DATASOURCE_USERNAME=ticketuser
+      - SPRING_DATASOURCE_PASSWORD=TicketPass123
+      - SPRING_DATASOURCE_DRIVER-CLASS-NAME=oracle.jdbc.OracleDriver
+      - SPRING_JPA_DATABASE-PLATFORM=org.hibernate.dialect.OracleDialect
+      - SPRING_JPA_HIBERNATE_DDL-AUTO=validate
+      - SPRING_JPA_SHOW-SQL=true
+      - JWT_SECRET=your-very-long-and-secure-secret-key
+      - JWT_EXPIRATION=86400000
+    depends_on:
+      oracle-db:
+        condition: service_healthy
+    restart: on-failure
+
+volumes:
+  oracle-data:
