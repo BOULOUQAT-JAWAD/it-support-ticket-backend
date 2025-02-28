@@ -29,8 +29,6 @@ services:
       - SPRING_JPA_DATABASE-PLATFORM=org.hibernate.dialect.OracleDialect
       - SPRING_JPA_HIBERNATE_DDL-AUTO=validate
       - SPRING_JPA_SHOW-SQL=true
-      - JWT_SECRET=your-very-long-and-secure-secret-key
-      - JWT_EXPIRATION=86400000
     depends_on:
       oracle-db:
         condition: service_healthy
